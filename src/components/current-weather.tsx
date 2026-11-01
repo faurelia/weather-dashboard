@@ -1,10 +1,4 @@
-import {
-  DropletsIcon,
-  GaugeIcon,
-  MapPinIcon,
-  ThermometerIcon,
-  WindIcon,
-} from "lucide-react";
+import { DropletsIcon, GaugeIcon, MapPinIcon, ThermometerIcon, WindIcon } from "lucide-react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getCurrentWeather } from "../lib/api";
@@ -36,9 +30,7 @@ export default function CurrentWeather() {
           <div>
             <p className="text-5xl font-bold">{data.main.temp.toFixed(1)} °C</p>
 
-            <p className="text-lg font-semibold capitalize">
-              {weather.description}
-            </p>
+            <p className="text-lg font-semibold capitalize">{weather.description}</p>
 
             <p className="text-sm text-muted-foreground">
               Feels like {data.main.feels_like.toFixed(1)} °C
@@ -87,8 +79,7 @@ export default function CurrentWeather() {
             <div className="flex flex-col gap-1">
               <span className="text-xs text-muted-foreground">High / Low</span>
               <span className="font-bold">
-                {data.main.temp_max.toFixed(1)}° /{" "}
-                {data.main.temp_min.toFixed(1)}°
+                {data.main.temp_max.toFixed(1)}° / {data.main.temp_min.toFixed(1)}°
               </span>
             </div>
           </div>

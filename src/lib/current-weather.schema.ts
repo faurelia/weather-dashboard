@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 export const currentWeatherSchema = z.object({
@@ -13,7 +12,7 @@ export const currentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    })
+    }),
   ),
 
   base: z.string(),
