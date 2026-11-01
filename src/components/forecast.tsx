@@ -13,7 +13,15 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "./ui/item";
 
 type Props = {
   coordinates: Coordinates;
@@ -40,15 +48,19 @@ export function Forecast({ coordinates }: Props) {
     minute: "2-digit",
   });
 
+  useEffect(() => {
+    setOpenDay(data.days[0]?.date ?? null);
+  }, [data]);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex flex-col md:flex-row md:items-center gap-2">
+        <CardTitle className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-4" />
             <h2 className="uppercase">5-day / 3-hour Forecast Breakdown</h2>
           </div>
-          <span className="text-sm text-muted-foreground md:ml-auto">
+          <span className="text-sm text-muted-foreground">
             Click a day to expand hourly data
           </span>
         </CardTitle>
@@ -63,53 +75,70 @@ export function Forecast({ coordinates }: Props) {
               open={openDay === day.date}
               onOpenChange={(isOpen) => setOpenDay(isOpen ? day.date : null)}
             >
-              <CollapsibleTrigger className="w-full   cursor-pointer transition-colors bg-accent/85 hover:bg-accent p-4 rounded-md data-panel-open:rounded-b-none flex items-center justify-between">
-                <div className="font-semibold">
-                  <span className="text-lg">
-                    {dateFormatter.format(new Date(day.date))}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold mr-2 text-lg">
-                    {day.maxTemp.toFixed(1)} °C
-                  </span>
-                  <span className="text-muted-foreground">
-                    {day.minTemp.toFixed(1)}
-                    °C
-                  </span>
-                  {openDay === day.date ? (
-                    <ChevronDownIcon className="size-4 ml-2" />
-                  ) : (
-                    <ChevronUpIcon className="size-4 ml-2" />
-                  )}
-                </div>
+              <CollapsibleTrigger className="w-full cursor-pointer transition-colors bg-accent/85 hover:bg-accent rounded-md data-panel-open:rounded-b-none">
+                <Item>
+                  <ItemMedia variant="image" className="w-10 h-10">
+                    <img
+                      src={`https://openweathermap.org/img/wn/${day.icon}@2x.png`}
+                      alt={day.description}
+                      className="object-cover"
+                    />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>
+                      {dateFormatter.format(new Date(`${day.date}T12:00:00`))}
+                    </ItemTitle>
+                    <ItemDescription className="text-xs text-muted-foreground">
+                      {day.description}
+                    </ItemDescription>
+                  </ItemContent>
+                  <ItemContent>
+                    <ItemTitle>{day.maxTemp.toFixed(1)}°</ItemTitle>
+                    <ItemDescription className="text-xs text-muted-foreground">
+                      {day.minTemp.toFixed(1)}°C
+                    </ItemDescription>
+                  </ItemContent>
+                  <ItemActions>
+                    {openDay === day.date ? (
+                      <ChevronUpIcon className="size-4" />
+                    ) : (
+                      <ChevronDownIcon className="size-4" />
+                    )}
+                  </ItemActions>
+                </Item>
               </CollapsibleTrigger>
 
-              <CollapsibleContent>
-                <div className="flex lg:grid lg:grid-cols-8 gap-4 overflow-x-auto p-4 ">
+              <CollapsibleContent className="p-4 border-t">
+                <div className="flex lg:grid lg:grid-cols-8 gap-4 overflow-x-auto snap-x snap-mandatory lg:snap-none">
                   {day.forecasts.map((forecast) => (
-                    <div
+                    <Card
                       key={forecast.dt}
-                      className="shrink-0 min-w-25 border rounded-md bg-accent p-2  flex flex-col items-center gap-2"
+                      className="[--card-spacing:--spacing(2)] bg-accent rounded-md border shrink-0 min-w-25 snap-start lg:snap-align-none"
                     >
-                      <p className="text-sm text-muted-foreground flex items-center gap-1 whitespace-nowrap">
-                        <ClockIcon className="size-4" />
-                        {timeFormatter.format(new Date(forecast.dt * 1000))}
-                      </p>
-                      <img
-                        src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`}
-                        alt={forecast.weather[0].description}
-                        className="size-16 object-contain"
-                        loading="lazy"
-                      />
-                      <p className="text-lg font-semibold">
-                        {forecast.main.temp.toFixed(1)} °C
-                      </p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <DropletIcon className="size-4 text-sky-400" />
-                        {forecast.main.humidity}%
-                      </p>
-                    </div>
+                      <CardHeader>
+                        <CardTitle className="flex items-center justify-center gap-2">
+                          <h3 className="text-sm text-muted-foreground flex items-center gap-1 whitespace-nowrap">
+                            <ClockIcon className="size-4" />
+                            {timeFormatter.format(new Date(forecast.dt * 1000))}
+                          </h3>
+                        </CardTitle>
+                        <CardContent className="flex flex-col items-center gap-2">
+                          <img
+                            src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`}
+                            alt={forecast.weather[0].description}
+                            className="size-16 object-contain"
+                            loading="lazy"
+                          />
+                          <p className="text-lg font-semibold">
+                            {forecast.main.temp.toFixed(1)} °C
+                          </p>
+                          <p className="text-sm text-muted-foreground flex items-center gap-1">
+                            <DropletIcon className="size-4 text-sky-400" />
+                            {forecast.main.humidity}%
+                          </p>
+                        </CardContent>
+                      </CardHeader>
+                    </Card>
                   ))}
                 </div>
               </CollapsibleContent>

@@ -71,7 +71,7 @@ export const geocodingSchema = z.array(
 
 export const currentWeatherSchema = z.object({
   coord: coordSchema,
-  weather: z.array(weatherConditionSchema),
+  weather: z.array(weatherConditionSchema).min(1),
   base: z.string(),
   main: mainSchema.omit({ temp_kf: true }),
   visibility: z.number(),
@@ -94,7 +94,7 @@ export const currentWeatherSchema = z.object({
 const forecastItemSchema = z.object({
   dt: z.number(),
   main: mainSchema,
-  weather: z.array(weatherConditionSchema),
+  weather: z.array(weatherConditionSchema).min(1),
   clouds: cloudsSchema,
   wind: windSchema,
   visibility: z.number().optional(),
