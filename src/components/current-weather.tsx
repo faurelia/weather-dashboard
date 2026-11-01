@@ -9,6 +9,14 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getCurrentWeather, type Coordinates } from "../lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "./ui/item";
+import { cn } from "@/lib/utils";
 
 type Props = {
   coordinates: Coordinates;
@@ -22,6 +30,33 @@ export function CurrentWeather({ coordinates }: Props) {
 
   const weather = data.weather[0];
 
+  const itemDetails = [
+    {
+      icon: DropletsIcon,
+      iconColor: "text-sky-400",
+      title: "Humidity",
+      value: `${data.main.humidity}%`,
+    },
+    {
+      icon: WindIcon,
+      iconColor: "text-teal-400",
+      title: "Wind",
+      value: `${data.wind.speed} m/s`,
+    },
+    {
+      icon: GaugeIcon,
+      iconColor: "text-amber-400",
+      title: "Pressure",
+      value: `${data.main.pressure} hPa`,
+    },
+    {
+      icon: ThermometerIcon,
+      iconColor: "text-rose-400",
+      title: "High / Low",
+      value: `${data.main.temp_max.toFixed(1)}° / ${data.main.temp_min.toFixed(1)}°`,
+    },
+  ];
+
   return (
     <Card>
       <CardHeader>
@@ -33,9 +68,11 @@ export function CurrentWeather({ coordinates }: Props) {
 
       <CardContent>
         {/* Main weather information */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-5xl font-bold">{data.main.temp.toFixed(1)} °C</p>
+            <p className="text-5xl font-semibold">
+              {data.main.temp.toFixed(1)} °C
+            </p>
 
             <p className="text-lg font-semibold capitalize">
               {weather.description}
@@ -46,7 +83,7 @@ export function CurrentWeather({ coordinates }: Props) {
             </p>
           </div>
 
-          <div className="ml-auto flex flex-col items-center gap-2 rounded-md border p-4 bg-accent">
+          <div className="flex flex-col items-center gap-2 rounded-md border p-2 bg-accent">
             <img
               src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
               alt={weather.description}
@@ -58,41 +95,27 @@ export function CurrentWeather({ coordinates }: Props) {
         <Separator className="my-4" />
 
         {/* Additional weather information */}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="flex items-center gap-2 border bg-accent-foreground/5 p-4 rounded-md">
-            <DropletsIcon className="size-6 text-sky-400" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">Humidity</span>
-              <span className="font-bold">{data.main.humidity}%</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 border bg-accent-foreground/5 p-4 rounded-md">
-            <WindIcon className="size-6 text-teal-400" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">Wind</span>
-              <span className="font-bold">{data.wind.speed} m/s</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 border bg-accent-foreground/5 p-4 rounded-md">
-            <GaugeIcon className="size-6 text-amber-400" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">Pressure</span>
-              <span className="font-bold">{data.main.pressure} hPa</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 border bg-accent-foreground/5 p-4 rounded-md">
-            <ThermometerIcon className="size-6 text-rose-400" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">High / Low</span>
-              <span className="font-bold">
-                {data.main.temp_max.toFixed(1)}° /{" "}
-                {data.main.temp_min.toFixed(1)}°
-              </span>
-            </div>
-          </div>
+        <div className="grid grid-cols-2 gap-4">
+          {itemDetails.map(({ icon: Icon, iconColor, title, value }) => (
+            <Item
+              key={title}
+              variant="outline"
+              size="sm"
+              className="bg-foreground/5"
+            >
+              <ItemMedia variant="icon" className="my-auto">
+                <Icon className={cn("size-6", iconColor)} />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle className="text-xs text-muted-foreground">
+                  {title}
+                </ItemTitle>
+                <ItemDescription className="font-bold text-foreground">
+                  {value}
+                </ItemDescription>
+              </ItemContent>
+            </Item>
+          ))}
         </div>
       </CardContent>
     </Card>
