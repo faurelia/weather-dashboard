@@ -1,12 +1,21 @@
-import { currentWeatherSchema } from "../lib/current-weather.schema";
-import { forecastWeatherSchema } from "./forecast-weather.schema";
+import {
+  currentWeatherSchema,
+  forecastSchema,
+  geocodingSchema,
+} from "./weather.schema";
 import { groupForecastByDate } from "./group-forecast";
+import z from "zod";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-export const getCurrentWeather = async () => {
+export type Coordinates = {
+  lat: number;
+  lon: number;
+};
+
+export const getCurrentWeather = async ({ lat, lon }: Coordinates) => {
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=51&lon=-0.12&units=metric&appid=${API_KEY}`,
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`,
   );
   if (!response.ok) {
     throw new Error("Failed to fetch current weather data");
@@ -16,21 +25,51 @@ export const getCurrentWeather = async () => {
   return currentWeatherSchema.parse(data);
 };
 
-export const getForecastWeather = async () => {
+export const getForecast = async ({ lat, lon }: Coordinates) => {
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=51&lon=-0.12&units=metric&appid=${API_KEY}`,
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`,
   );
+
   if (!response.ok) {
-    throw new Error("Failed to fetch forecast weather data");
+    throw new Error(
+      `Failed to fetch forecast weather data: ${response.status}`,
+    );
   }
+
   const json: unknown = await response.json();
 
-  const data = forecastWeatherSchema.parse(json);
+  const result = forecastSchema.safeParse(json);
 
-  console.log(data);
+  if (!result.success) {
+    console.error(z.prettifyError(result.error));
+    throw new Error("Invalid forecast API response");
+  }
 
   return {
-    city: data.city,
-    days: groupForecastByDate(data.list),
+    city: result.data.city,
+    days: groupForecastByDate(result.data.list),
   };
+};
+
+export const geocodeCity = async (city: string) => {
+  const params = new URLSearchParams({
+    q: city,
+    limit: "5",
+    appid: API_KEY,
+  });
+
+  const response = await fetch(
+    `https://api.openweathermap.org/geo/1.0/direct?${params.toString()}`,
+  );
+  if (!response.ok) {
+    throw new Error("Failed to find specified data");
+  }
+
+  const data = geocodingSchema.parse(await response.json());
+
+  if (!data.length) {
+    throw new Error("City not found.");
+  }
+
+  return data[0];
 };

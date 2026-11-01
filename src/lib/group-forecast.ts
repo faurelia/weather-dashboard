@@ -1,4 +1,4 @@
-import type { ForecastItem } from "./forecast-weather.schema";
+import type { ForecastItem } from "./weather.schema";
 
 export type DailyForecast = {
   date: string;

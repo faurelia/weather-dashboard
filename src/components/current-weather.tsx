@@ -5,18 +5,19 @@ import {
   ThermometerIcon,
   WindIcon,
 } from "lucide-react";
-
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getCurrentWeather } from "../lib/api";
-
+import { getCurrentWeather, type Coordinates } from "../lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-
 import { Separator } from "./ui/separator";
 
-export default function CurrentWeather() {
+type Props = {
+  coordinates: Coordinates;
+};
+
+export function CurrentWeather({ coordinates }: Props) {
   const { data } = useSuspenseQuery({
-    queryKey: ["currentWeather"],
-    queryFn: getCurrentWeather,
+    queryKey: ["weather", "current", coordinates.lat, coordinates.lon],
+    queryFn: () => getCurrentWeather(coordinates),
   });
 
   const weather = data.weather[0];

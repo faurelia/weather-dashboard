@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   CalendarIcon,
@@ -8,26 +7,28 @@ import {
   DropletIcon,
 } from "lucide-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getForecastWeather } from "@/lib/api";
+import { getForecast, type Coordinates } from "@/lib/api";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import { useState } from "react";
 
-type Props = {};
+type Props = {
+  coordinates: Coordinates;
+};
 
-export default function ForecastWeather(_props: Props) {
+export function Forecast({ coordinates }: Props) {
   const { data } = useSuspenseQuery({
-    queryKey: ["forecastWeather"],
-    queryFn: getForecastWeather,
+    queryKey: ["weather", "forecast", coordinates.lat, coordinates.lon],
+    queryFn: () => getForecast(coordinates),
   });
 
-  const [openDay, setOpenDay] = React.useState<string | null>(
+  const [openDay, setOpenDay] = useState<string | null>(
     data.days[0]?.date || null,
   );
 
-  console.log(data);
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     weekday: "short",
     month: "short",
