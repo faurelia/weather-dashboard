@@ -7,7 +7,9 @@ export type DailyForecast = {
   maxTemp: number;
 };
 
-export function groupForecastByDate(forecasts: ForecastItem[]): DailyForecast[] {
+export function groupForecastByDate(
+  forecasts: ForecastItem[],
+): DailyForecast[] {
   const grouped = new Map<string, ForecastItem[]>();
 
   for (const forecast of forecasts) {

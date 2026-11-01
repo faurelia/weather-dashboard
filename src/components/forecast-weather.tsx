@@ -1,9 +1,19 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { CalendarIcon, ChevronDownIcon, ChevronUpIcon, ClockIcon, DropletIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ClockIcon,
+  DropletIcon,
+} from "lucide-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getForecastWeather } from "@/lib/api";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
 
 type Props = {};
 
@@ -13,7 +23,9 @@ export default function ForecastWeather(_props: Props) {
     queryFn: getForecastWeather,
   });
 
-  const [openDay, setOpenDay] = React.useState<string | null>(data.days[0]?.date || null);
+  const [openDay, setOpenDay] = React.useState<string | null>(
+    data.days[0]?.date || null,
+  );
 
   console.log(data);
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -50,10 +62,14 @@ export default function ForecastWeather(_props: Props) {
             >
               <CollapsibleTrigger className="w-full   cursor-pointer transition-colors bg-accent/85 hover:bg-accent p-4 rounded-md data-panel-open:rounded-b-none flex items-center justify-between">
                 <div className="font-semibold">
-                  <span className="text-lg">{dateFormatter.format(new Date(day.date))}</span>
+                  <span className="text-lg">
+                    {dateFormatter.format(new Date(day.date))}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold mr-2 text-lg">{day.maxTemp.toFixed(1)} °C</span>
+                  <span className="font-semibold mr-2 text-lg">
+                    {day.maxTemp.toFixed(1)} °C
+                  </span>
                   <span className="text-muted-foreground">
                     {day.minTemp.toFixed(1)}
                     °C
@@ -83,7 +99,9 @@ export default function ForecastWeather(_props: Props) {
                         className="size-16 object-contain"
                         loading="lazy"
                       />
-                      <p className="text-lg font-semibold">{forecast.main.temp.toFixed(1)} °C</p>
+                      <p className="text-lg font-semibold">
+                        {forecast.main.temp.toFixed(1)} °C
+                      </p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <DropletIcon className="size-4 text-sky-400" />
                         {forecast.main.humidity}%

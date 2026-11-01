@@ -4,6 +4,14 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  fmt: {
+    printWidth: 80,
+    tabWidth: 2,
+    useTabs: false,
+    semi: true,
+    singleQuote: false,
+    trailingComma: "all",
+  },
   plugins: lazyPlugins(() => [react(), tailwindcss()]),
 
   resolve: {
