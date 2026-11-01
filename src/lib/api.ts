@@ -5,6 +5,7 @@ import {
 } from "./weather.schema";
 import { groupForecastByDate } from "./group-forecast";
 import z from "zod";
+import { airPollutionSchema } from "./air-pollution.schema";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
@@ -72,4 +73,31 @@ export const geocodeCity = async (city: string) => {
   }
 
   return data[0];
+};
+
+export const getAirPollution = async ({ lat, lon }: Coordinates) => {
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch air pollution data: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  const data = airPollutionSchema.safeParse(await response.json());
+
+  if (!data.success) {
+    console.error(z.prettifyError(data.error));
+    throw new Error("Invalid air pollution API response");
+  }
+
+  const pollution = data.data.list[0];
+
+  if (!pollution) {
+    throw new Error("No air pollution data available for these coordinates");
+  }
+
+  return pollution;
 };

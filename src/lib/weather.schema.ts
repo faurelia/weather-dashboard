@@ -4,11 +4,6 @@ import { z } from "zod";
 // Reusable schemas
 // ==========================================
 
-const coordSchema = z.object({
-  lat: z.number(),
-  lon: z.number(),
-});
-
 const weatherConditionSchema = z.object({
   id: z.number(),
   main: z.string(),
@@ -53,6 +48,11 @@ const currentWeatherSysSchema = z.object({
   country: z.string(),
   sunrise: z.number(),
   sunset: z.number(),
+});
+
+export const coordSchema = z.object({
+  lat: z.number(),
+  lon: z.number(),
 });
 
 export const geocodingSchema = z.array(

@@ -30,21 +30,25 @@ export function SearchInput({ onSearch }: Props) {
   return (
     <form onSubmit={handleSearch} className="w-full">
       <Field orientation="horizontal" className="bg-accent rounded-md">
-        <InputGroup>
+        <InputGroup className="h-12 px-2 rounded-md bg-accent">
           <InputGroupInput
             type="search"
             placeholder="Search city name (eg: New York, London)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            className="text-lg!"
           />
-          <InputGroupAddon>
+
+          <InputGroupAddon className="px-2">
             <InputGroupText>
-              <SearchIcon />
+              <SearchIcon className="size-5" />
             </InputGroupText>
           </InputGroupAddon>
+
           <InputGroupAddon align="inline-end">
             <InputGroupButton
               variant="default"
+              size="sm"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
               type="submit"
               disabled={!search.trim()}

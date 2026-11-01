@@ -4,6 +4,7 @@ import { Forecast } from "./forecast";
 import { SearchInput } from "./search-input";
 import { geocodeCity, type Coordinates } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
+import { AirPollution } from "./air-pollution";
 
 const DEFAULT_COORDINATES: Coordinates = {
   lat: 35.6762,
@@ -58,6 +59,9 @@ export function WeatherDashboard() {
 
       <Suspense fallback={<div>Loading current weather...</div>}>
         <CurrentWeather coordinates={coordinates} />
+      </Suspense>
+      <Suspense fallback={<div>Loading air pollution...</div>}>
+        <AirPollution coordinates={coordinates} />
       </Suspense>
       <Suspense fallback={<div>Loading forecast weather...</div>}>
         <Forecast coordinates={coordinates} />

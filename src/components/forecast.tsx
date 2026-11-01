@@ -43,10 +43,12 @@ export function Forecast({ coordinates }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CalendarIcon className="size-4" />
-          <h2 className="uppercase">5-day / 3-hour Forecast Breakdown</h2>
-          <span className="text-sm text-muted-foreground ml-auto">
+        <CardTitle className="flex flex-col md:flex-row md:items-center gap-2">
+          <div className="flex items-center gap-2">
+            <CalendarIcon className="size-4" />
+            <h2 className="uppercase">5-day / 3-hour Forecast Breakdown</h2>
+          </div>
+          <span className="text-sm text-muted-foreground md:ml-auto">
             Click a day to expand hourly data
           </span>
         </CardTitle>
