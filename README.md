@@ -54,14 +54,14 @@ key is required to load the map's basemap.
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the local development server. |
-| `pnpm build` | Create a production build. |
+| Command        | Description                           |
+| -------------- | ------------------------------------- |
+| `pnpm dev`     | Start the local development server.   |
+| `pnpm build`   | Create a production build.            |
 | `pnpm preview` | Preview the production build locally. |
-| `pnpm lint` | Run the linter. |
-| `pnpm check` | Run the project's checks. |
-| `pnpm format` | Format project files. |
+| `pnpm lint`    | Run the linter.                       |
+| `pnpm check`   | Run the project's checks.             |
+| `pnpm format`  | Format project files.                 |
 
 ## Tech stack
 

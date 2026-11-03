@@ -51,16 +51,14 @@ export function WeatherDashboard() {
   }, []);
 
   return (
-    <main className="max-w-6xl mx-auto py-8 flex flex-col gap-8">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-8">
       <SearchInput
         onSearch={(city) => {
           hasSearched.current = true;
           mutate(city);
         }}
       />
-
       {error && <p className="text-destructive">{error.message}</p>}
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Suspense fallback={<CurrentWeatherSkeleton />}>
           <CurrentWeather coordinates={coordinates} />
@@ -72,7 +70,6 @@ export function WeatherDashboard() {
           />
         </div>
       </div>
-
       <Suspense fallback={<AirPollutionSkeleton />}>
         <AirPollution coordinates={coordinates} />
       </Suspense>

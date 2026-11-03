@@ -74,7 +74,7 @@ export function CurrentWeatherSkeleton() {
                   {title}
                 </ItemTitle>
                 <div className="font-bold text-foreground">
-                  <Skeleton className="h-5.25 w-23" />
+                  <Skeleton className="h-5.25 w-20" />
                 </div>
               </ItemContent>
             </Item>
