@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive weather dashboard built with React, TypeScript, and Vite. Look up a
+city or choose a point on the map to see current weather, a five-day forecast,
+and air quality for that location.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Current conditions, including temperature, feels-like temperature, humidity,
+  wind speed, pressure, and today's high and low.
+- Five-day forecast with three-hour intervals; expand a day to see its details.
+- Air Quality Index (AQI) and pollutant concentrations.
+- Interactive dark map. Select a location on the map to update the weather.
+- Uses the browser's location when permission is granted; otherwise starts at
+  Tokyo, Japan. Search for a city at any time.
+- Loading placeholders and cached API requests powered by TanStack Query.
 
-## React Compiler
+## Requirements
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js and [pnpm](https://pnpm.io/installation).
+- An [OpenWeather](https://openweathermap.org/api) API key for geocoding,
+  current weather, forecasts, and air pollution data.
+- A [MapTiler](https://www.maptiler.com/cloud/) API key for map tiles.
 
-## Expanding the ESLint configuration
+Both API keys are used in the browser, so they are visible to users of a
+deployed app. Use keys with appropriate provider-side restrictions and usage
+limits; do not commit your local environment file.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+1. Install dependencies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```sh
+   pnpm install
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+2. Create a `.env.local` file in the project root:
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+   ```dotenv
+   VITE_OPENWEATHER_API_KEY=your_openweather_api_key
+   VITE_MAPTILER_API_KEY=your_maptiler_api_key
+   ```
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+3. Start the development server:
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+   ```sh
+   pnpm dev
+   ```
+
+   Open the local URL printed by Vite.
+
+The OpenWeather key is required for weather data and city search. The MapTiler
+key is required to load the map's basemap.
+
+## Commands
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the local development server. |
+| `pnpm build` | Create a production build. |
+| `pnpm preview` | Preview the production build locally. |
+| `pnpm lint` | Run the linter. |
+| `pnpm check` | Run the project's checks. |
+| `pnpm format` | Format project files. |
+
+## Tech stack
+
+- React 19 and TypeScript
+- Vite (via Vite+)
+- TanStack Query
+- Leaflet and React Leaflet
+- Tailwind CSS
+- OpenWeather APIs and MapTiler map tiles
