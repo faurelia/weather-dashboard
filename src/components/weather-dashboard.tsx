@@ -9,6 +9,7 @@ import { Forecast } from "@/components/forecast";
 import { ForecastSkeleton } from "@/components/forecast-skeleton";
 import { WeatherMap } from "@/components/weather-map";
 import { geocodeCity, type Coordinates } from "@/lib/api";
+import { Header } from "@/components/header";
 
 const DEFAULT_COORDINATES: Coordinates = {
   lat: 35.6762,
@@ -51,31 +52,34 @@ export function WeatherDashboard() {
   }, []);
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-8">
-      <SearchInput
-        onSearch={(city) => {
-          hasSearched.current = true;
-          mutate(city);
-        }}
-      />
-      {error && <p className="text-destructive">{error.message}</p>}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Suspense fallback={<CurrentWeatherSkeleton />}>
-          <CurrentWeather coordinates={coordinates} />
-        </Suspense>
-        <div className="md:col-span-2 min-h-110">
-          <WeatherMap
-            coordinates={coordinates}
-            onCoordinatesChange={setCoordinates}
-          />
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-8">
+      <Header />
+      <main className="flex flex-col gap-6">
+        <SearchInput
+          onSearch={(city) => {
+            hasSearched.current = true;
+            mutate(city);
+          }}
+        />
+        {error && <p className="text-destructive">{error.message}</p>}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <Suspense fallback={<CurrentWeatherSkeleton />}>
+            <CurrentWeather coordinates={coordinates} />
+          </Suspense>
+          <div className="md:col-span-2 min-h-110">
+            <WeatherMap
+              coordinates={coordinates}
+              onCoordinatesChange={setCoordinates}
+            />
+          </div>
         </div>
-      </div>
-      <Suspense fallback={<AirPollutionSkeleton />}>
-        <AirPollution coordinates={coordinates} />
-      </Suspense>
-      <Suspense fallback={<ForecastSkeleton />}>
-        <Forecast coordinates={coordinates} />
-      </Suspense>
-    </main>
+        <Suspense fallback={<AirPollutionSkeleton />}>
+          <AirPollution coordinates={coordinates} />
+        </Suspense>
+        <Suspense fallback={<ForecastSkeleton />}>
+          <Forecast coordinates={coordinates} />
+        </Suspense>
+      </main>
+    </div>
   );
 }

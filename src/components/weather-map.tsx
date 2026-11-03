@@ -28,6 +28,7 @@ import {
   WindIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/theme-provider";
 
 type WeatherMapProps = {
   coordinates: Coordinates;
@@ -106,6 +107,9 @@ export function WeatherMap({
   const [mapType, setMapType] = useState("default");
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { theme } = useTheme();
+
+  const mapStyle = theme === "dark" ? "dataviz-dark" : "dataviz-light";
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -191,7 +195,7 @@ export function WeatherMap({
 
               {/* Base map */}
               <TileLayer
-                url={`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`}
+                url={`https://api.maptiler.com/maps/${mapStyle}/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`}
                 attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; OpenStreetMap contributors'
               />
 

@@ -29,8 +29,8 @@ export function SearchInput({ onSearch }: Props) {
 
   return (
     <form onSubmit={handleSearch} className="w-full">
-      <Field orientation="horizontal" className="bg-accent rounded-md">
-        <InputGroup className="h-12 px-2 rounded-md bg-accent">
+      <Field orientation="horizontal" className="rounded-md">
+        <InputGroup className="h-12 px-2 rounded-md bg-background">
           <InputGroupInput
             type="search"
             placeholder="Search city name (eg: New York, London)..."
