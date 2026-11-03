@@ -1,14 +1,14 @@
 import { Suspense, useEffect, useRef, useState } from "react";
-import { CurrentWeather } from "./current-weather";
-import { Forecast } from "./forecast";
-import { SearchInput } from "./search-input";
-import { geocodeCity, type Coordinates } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
-import { AirPollution } from "./air-pollution";
-import { WeatherMap } from "./weather-map";
-import { CurrentWeatherSkeleton } from "./current-weather-skeleton";
-import { AirPollutionSkeleton } from "./air-pollution-skeleton";
-import { ForecastSkeleton } from "./forecast-skeleton";
+import { SearchInput } from "@/components/search-input";
+import { CurrentWeather } from "@/components/current-weather";
+import { CurrentWeatherSkeleton } from "@/components/current-weather-skeleton";
+import { AirPollution } from "@/components/air-pollution";
+import { AirPollutionSkeleton } from "@/components/air-pollution-skeleton";
+import { Forecast } from "@/components/forecast";
+import { ForecastSkeleton } from "@/components/forecast-skeleton";
+import { WeatherMap } from "@/components/weather-map";
+import { geocodeCity, type Coordinates } from "@/lib/api";
 
 const DEFAULT_COORDINATES: Coordinates = {
   lat: 35.6762,

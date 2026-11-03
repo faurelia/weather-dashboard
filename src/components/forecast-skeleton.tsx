@@ -6,20 +6,20 @@ import {
   DropletIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "@/components/ui/collapsible";
 import {
   Item,
   ItemActions,
   ItemContent,
   ItemMedia,
   ItemTitle,
-} from "./ui/item";
-import { Skeleton } from "./ui/skeleton";
+} from "@/components/ui/item";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DAYS = Array.from({ length: 6 }, (_, i) => i);
 const HOURLY_CARDS = Array.from({ length: 8 }, (_, i) => i);

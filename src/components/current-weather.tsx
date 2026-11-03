@@ -1,9 +1,5 @@
 import { MapPinIcon } from "lucide-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getCurrentWeather, type Coordinates } from "../lib/api";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Separator } from "./ui/separator";
-import { cn } from "@/lib/utils";
 import { itemDetails } from "@/lib/weather.utils";
 import {
   Item,
@@ -12,6 +8,10 @@ import {
   ItemMedia,
   ItemTitle,
 } from "./ui/item";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { getCurrentWeather, type Coordinates } from "@/lib/api";
 
 type Props = {
   coordinates: Coordinates;

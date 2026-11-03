@@ -5,10 +5,10 @@ import {
   ThermometerIcon,
   WindIcon,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Separator } from "./ui/separator";
-import { Item, ItemContent, ItemMedia, ItemTitle } from "./ui/item";
-import { Skeleton } from "./ui/skeleton";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Item, ItemMedia, ItemContent, ItemTitle } from "@/components/ui/item";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 export function CurrentWeatherSkeleton() {

@@ -1,5 +1,5 @@
+import { coordSchema } from "@/lib/weather.schema";
 import { z } from "zod";
-import { coordSchema } from "./weather.schema";
 
 // Air Quality Index
 const airQualityMainSchema = z.object({

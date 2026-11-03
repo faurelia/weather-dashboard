@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   CalendarIcon,
   ChevronDownIcon,
@@ -6,22 +7,21 @@ import {
   ClockIcon,
   DropletIcon,
 } from "lucide-react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getForecast, type Coordinates } from "@/lib/api";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
-import { useEffect, useState } from "react";
+} from "@/components/ui/collapsible";
 import {
   Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
   ItemMedia,
+  ItemContent,
   ItemTitle,
-} from "./ui/item";
+  ItemDescription,
+  ItemActions,
+} from "@/components/ui/item";
+import { getForecast, type Coordinates } from "@/lib/api";
 
 type Props = {
   coordinates: Coordinates;

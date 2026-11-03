@@ -1,10 +1,10 @@
-import { getAirPollution, type Coordinates } from "@/lib/api";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ShieldAlertIcon } from "lucide-react";
-import { Progress } from "./ui/progress";
 import { cn } from "@/lib/utils";
+import { getAirPollution, type Coordinates } from "@/lib/api";
 import { POLLUTANT_LABELS } from "@/lib/weather.utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 type Props = {
   coordinates: Coordinates;

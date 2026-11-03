@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Field } from "./ui/field";
+import { SearchIcon } from "lucide-react";
+import { Field } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
   InputGroupText,
-} from "./ui/input-group";
-import { SearchIcon } from "lucide-react";
+} from "@/components/ui/input-group";
 
 type Props = {
   onSearch: (city: string) => void;

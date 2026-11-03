@@ -1,11 +1,11 @@
+import { airPollutionSchema } from "@/lib/air-pollution.schema";
+import { groupForecastByDate } from "@/lib/group-forecast";
 import {
   currentWeatherSchema,
   forecastSchema,
   geocodingSchema,
-} from "./weather.schema";
-import { groupForecastByDate } from "./group-forecast";
+} from "@/lib/weather.schema";
 import z from "zod";
-import { airPollutionSchema } from "./air-pollution.schema";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 

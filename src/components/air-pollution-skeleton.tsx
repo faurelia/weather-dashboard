@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ShieldAlertIcon } from "lucide-react";
-import { Skeleton } from "./ui/skeleton";
 import { POLLUTANT_LABELS } from "@/lib/weather.utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function AirPollutionSkeleton() {
   return (

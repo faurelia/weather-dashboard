@@ -7,6 +7,7 @@ import {
 } from "react-leaflet";
 import type { Coordinates } from "@/lib/api";
 import { useEffect } from "react";
+import "@/lib/leaflet-icons";
 
 type WeatherMapProps = {
   coordinates: Coordinates;
