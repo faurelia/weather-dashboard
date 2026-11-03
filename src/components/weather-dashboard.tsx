@@ -6,6 +6,9 @@ import { geocodeCity, type Coordinates } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { AirPollution } from "./air-pollution";
 import { WeatherMap } from "./weather-map";
+import { CurrentWeatherSkeleton } from "./current-weather-skeleton";
+import { AirPollutionSkeleton } from "./air-pollution-skeleton";
+import { ForecastSkeleton } from "./forecast-skeleton";
 
 const DEFAULT_COORDINATES: Coordinates = {
   lat: 35.6762,
@@ -59,7 +62,7 @@ export function WeatherDashboard() {
       {error && <p className="text-destructive">{error.message}</p>}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Suspense fallback={<div>Loading current weather...</div>}>
+        <Suspense fallback={<CurrentWeatherSkeleton />}>
           <CurrentWeather coordinates={coordinates} />
         </Suspense>
         <div className="md:col-span-2 min-h-110">
@@ -70,10 +73,10 @@ export function WeatherDashboard() {
         </div>
       </div>
 
-      <Suspense fallback={<div>Loading air pollution...</div>}>
+      <Suspense fallback={<AirPollutionSkeleton />}>
         <AirPollution coordinates={coordinates} />
       </Suspense>
-      <Suspense fallback={<div>Loading forecast weather...</div>}>
+      <Suspense fallback={<ForecastSkeleton />}>
         <Forecast coordinates={coordinates} />
       </Suspense>
     </main>

@@ -1,14 +1,10 @@
-import {
-  DropletsIcon,
-  GaugeIcon,
-  MapPinIcon,
-  ThermometerIcon,
-  WindIcon,
-} from "lucide-react";
+import { MapPinIcon } from "lucide-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getCurrentWeather, type Coordinates } from "../lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { cn } from "@/lib/utils";
+import { itemDetails } from "@/lib/weather.utils";
 import {
   Item,
   ItemContent,
@@ -16,7 +12,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from "./ui/item";
-import { cn } from "@/lib/utils";
 
 type Props = {
   coordinates: Coordinates;
@@ -30,31 +25,11 @@ export function CurrentWeather({ coordinates }: Props) {
 
   const weather = data.weather[0];
 
-  const itemDetails = [
-    {
-      icon: DropletsIcon,
-      iconColor: "text-sky-400",
-      title: "Humidity",
-      value: `${data.main.humidity}%`,
-    },
-    {
-      icon: WindIcon,
-      iconColor: "text-teal-400",
-      title: "Wind",
-      value: `${data.wind.speed} m/s`,
-    },
-    {
-      icon: GaugeIcon,
-      iconColor: "text-amber-400",
-      title: "Pressure",
-      value: `${data.main.pressure} hPa`,
-    },
-    {
-      icon: ThermometerIcon,
-      iconColor: "text-rose-400",
-      title: "High / Low",
-      value: `${data.main.temp_max.toFixed(1)}° / ${data.main.temp_min.toFixed(1)}°`,
-    },
+  const itemValues = [
+    `${data.main.humidity}%`,
+    `${data.wind.speed} m/s`,
+    `${data.main.pressure} hPa`,
+    `${data.main.temp_max.toFixed(1)}° / ${data.main.temp_min.toFixed(1)}°`,
   ];
 
   return (
@@ -96,7 +71,7 @@ export function CurrentWeather({ coordinates }: Props) {
 
         {/* Additional weather information */}
         <div className="grid grid-cols-2 gap-4">
-          {itemDetails.map(({ icon: Icon, iconColor, title, value }) => (
+          {itemDetails.map(({ icon: Icon, iconColor, title }, index) => (
             <Item
               key={title}
               variant="outline"
@@ -111,7 +86,7 @@ export function CurrentWeather({ coordinates }: Props) {
                   {title}
                 </ItemTitle>
                 <ItemDescription className="font-bold text-foreground">
-                  {value}
+                  {itemValues[index]}
                 </ItemDescription>
               </ItemContent>
             </Item>

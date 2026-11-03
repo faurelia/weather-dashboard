@@ -4,6 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ShieldAlertIcon } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { cn } from "@/lib/utils";
+import { POLLUTANT_LABELS } from "@/lib/weather.utils";
 
 type Props = {
   coordinates: Coordinates;
@@ -46,17 +47,6 @@ const AQI_DETAILS = {
     desc: "Health effects may occur. Consider limiting outdoor exposure.",
   },
 } as const;
-
-const POLLUTANT_LABELS: Record<string, string> = {
-  co: "CO",
-  no: "NO",
-  no2: "NO₂",
-  o3: "O₃",
-  so2: "SO₂",
-  pm2_5: "PM2.5",
-  pm10: "PM10",
-  nh3: "NH₃",
-};
 
 const isValidAqi = (aqi: number): aqi is keyof typeof AQI_DETAILS => {
   return aqi in AQI_DETAILS;
